@@ -1,0 +1,306 @@
+/* ─────────────────────────────────────────
+   SmartBeam — style.css
+   Dark industrial / automotive aesthetic
+───────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;900&family=DM+Mono:wght@300;400;500&display=swap');
+
+/* ── Reset & Variables ────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:         #08090d;
+  --panel:      #0e1018;
+  --border:     #1e2235;
+  --accent:     #00d4ff;
+  --accent2:    #ff6b2b;
+  --warn:       #ffcc00;
+  --text:       #c8d0e8;
+  --text-dim:   #4a5270;
+  --glow:       rgba(0, 212, 255, 0.18);
+  --radius-lg:  14px;
+  --radius-sm:  8px;
+}
+
+/* ── Base ─────────────────────────────── */
+body {
+  background: var(--bg);
+  font-family: 'DM Mono', monospace;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px 60px;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+/* Subtle grid overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top glow bloom */
+body::after {
+  content: '';
+  position: fixed;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 212, 255, 0.07) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Typography ───────────────────────── */
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 30px var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
+
+h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 2px;
+  margin-bottom: 14px;
+}
+
+h3,
+.label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-dim);
+}
+
+/* ── Card ─────────────────────────────── */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin: 12px 0;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  width: 100%;
+  max-width: 780px;
+  text-align: left;
+}
+
+/* Top accent line on each card */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.3;
+}
+
+.card:hover {
+  border-color: rgba(0, 212, 255, 0.25);
+  box-shadow: 0 0 24px rgba(0, 212, 255, 0.06);
+}
+
+/* ── Buttons ──────────────────────────── */
+button {
+  padding: 11px 22px;
+  margin: 5px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.15);
+  color: #fff;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Filled / primary variant */
+button.primary {
+  background: rgba(0, 212, 255, 0.12);
+  color: #fff;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.12);
+}
+
+/* Active/selected state (for mode buttons etc.) */
+button.active {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 16px rgba(0, 212, 255, 0.18);
+}
+
+/* Warning / sensor variant */
+button.warn {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+
+button.warn:hover {
+  background: rgba(255, 107, 43, 0.1);
+  box-shadow: 0 0 16px rgba(255, 107, 43, 0.15);
+  color: #fff;
+}
+
+/* ── Range Slider ─────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  outline: none;
+  margin: 10px 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.3);
+  box-shadow: 0 0 22px var(--accent);
+}
+
+/* ── Big Stat Numbers ─────────────────── */
+.stat {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--glow);
+  line-height: 1;
+}
+
+.stat.warn  { color: var(--warn);   text-shadow: 0 0 20px rgba(255,204,0,0.3); }
+.stat.alert { color: var(--accent2);text-shadow: 0 0 20px rgba(255,107,43,0.3);}
+
+/* ── Progress / Lux Bar ───────────────── */
+.bar-track {
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #2ecc71, var(--warn), var(--accent2));
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Status Pill ──────────────────────── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  padding: 7px 14px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  z-index: 1;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2ecc71;
+  box-shadow: 0 0 8px #2ecc71;
+  animation: pulse 2s infinite;
+}
+
+/* ── Animations ───────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #2ecc71; }
+  50%       { opacity: 0.5; box-shadow: 0 0 3px #2ecc71; }
+}
+
+/* Staggered entrance helpers */
+.anim-1 { animation: fadeUp 0.5s 0.05s ease both; }
+.anim-2 { animation: fadeUp 0.5s 0.15s ease both; }
+.anim-3 { animation: fadeUp 0.5s 0.25s ease both; }
+.anim-4 { animation: fadeUp 0.5s 0.35s ease both; }
+
+/* ── Responsive ───────────────────────── */
+@media (max-width: 560px) {
+  h1       { font-size: 22px; }
+  .stat    { font-size: 30px; }
+  .card    { padding: 18px; }
+  button   { padding: 10px 16px; font-size: 10px; }
+}
